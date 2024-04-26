@@ -1,7 +1,9 @@
+import { DRIVER_STORE } from '@common/basic/Index';
+
 @Entry
 @Component
 struct Index {
-  @State message: string = 'Hello World';
+  @State message: string = DRIVER_STORE;
 
   build() {
     Row() {
