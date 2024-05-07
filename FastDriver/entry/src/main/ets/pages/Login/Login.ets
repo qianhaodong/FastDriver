@@ -1,7 +1,7 @@
 @Entry
 @Component
-struct Index {
-  @State message: string = '主页';
+struct Login {
+  @State message: string = '登录';
 
   build() {
     Row() {
