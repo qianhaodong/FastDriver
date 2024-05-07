@@ -1,4 +1,4 @@
-import { AdvertClass, StoreManager } from '@common/basic'
+import { AdvertClass, StoreManager } from '@common/basic';
 import { window } from '@kit.ArkUI';
 
 @Entry
