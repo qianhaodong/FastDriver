@@ -33,6 +33,8 @@ async function requestHttp<T>(url: string, method: http.RequestMethod = http.Req
   try {
     const result = await httpRequest.request(urlStr, config);
 
+    console.log('http.httpResponse.result', JSON.stringify(result));
+
     // 判断Http状态码
     if (result.responseCode === 401) {
       // 401表示token无效

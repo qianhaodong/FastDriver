@@ -1,11 +1,14 @@
-import { LoginForm, LoginFormModel } from '../../models';
+import { StoreManager, USER_TOKEN } from '@common/basic/Index';
+import { login } from '../../api';
+import { LoginFormModel } from '../../models';
+import { promptAction, router } from '@kit.ArkUI';
 
 @Entry
 @Component
 struct Login {
   @State loading: boolean = false;
   @State loginForm: LoginFormModel = new LoginFormModel({
-    account: '',
+    account: 'bruceDriver',
     password: ''
   });
   // 高级类型Partial：可以快速把某个接口类型中定义的所有属性变成可选的。
@@ -24,6 +27,28 @@ struct Login {
       return true;
     }
     return false;
+  }
+
+  // 登录
+  async login() {
+    this.loading = true;
+    try {
+      const token = await login(this.loginForm);
+
+      // 登录成功提示
+      promptAction.showToast({ message: '登录成功' });
+
+      // 登录成功，保存token
+      const store = new StoreManager(getContext(this));
+      await store.setToken(token);
+      AppStorage.set(USER_TOKEN, token);
+
+      // 跳转到首页
+      router.replaceUrl({
+        url: 'pages/Index'
+      });
+    } catch (error) {}
+    this.loading = false;
   }
 
   build() {
@@ -72,6 +97,9 @@ struct Login {
       .height(50)
       .margin({ top: 50 })
       .enabled(this.getBtnEnable())
+      .onClick(() => {
+        this.login();
+      })
     }
     .padding({ left: 32, right: 32 })
     .margin({ top: 40 })
